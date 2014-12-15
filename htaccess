@@ -1,0 +1,28 @@
+# make test.some.url.com -> some.url.com/new
+Options +FollowSymlinks
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^test\.com$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.test\.com$
+RewriteCond %{REQUEST_URI} !^/new/
+RewriteRule (.*) /new/$1
+
+# loose the www
+RewriteCond %{http_host} ^www\.corz\.org [NC]
+RewriteRule ^(.*)$ http://corz.org/$1 [R=301,NC]
+
+#two domains served from one root..
+RewriteCond %{HTTP_HOST} domain-one.com
+RewriteCond %{REQUEST_URI} !^/one
+RewriteRule ^(.*)$ one/$1 [L]
+
+RewriteCond %{HTTP_HOST} domain-two.com
+RewriteCond %{REQUEST_URI} !^two
+RewriteRule ^(.*)$ two/$1 [L]
+
+
+# google translate
+RewriteRule ^(.*)-fr$ http://www.google.com/translate_c?hl=fr&sl=en&u=http://corz.org/$1 [R,NC]
+RewriteRule ^(.*)-de$ http://www.google.com/translate_c?hl=de&sl=en&u=http://corz.org/$1 [R,NC]
+RewriteRule ^(.*)-es$ http://www.google.com/translate_c?hl=es&sl=en&u=http://corz.org/$1 [R,NC]
+RewriteRule ^(.*)-it$ http://www.google.com/translate_c?hl=it&sl=en&u=http://corz.org/$1 [R,NC]
+RewriteRule ^(.*)-pt$ http://www.google.com/translate_c?hl=pt&sl=en&u=http://corz.org/$1 [R,NC]

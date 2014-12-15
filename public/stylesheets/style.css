@@ -1,0 +1,126 @@
+
+@media (max-width: 480px) {
+	.side_bar { float: right }
+	.left_content { float: left }
+}
+@media (max-width: 768px) {
+}
+@media (min-width: 768px) and (max-width: 940px) {
+	.item > img { min-width: 500px;}
+}
+@media (min-width: 800px) {
+	#content { position: relative; top: -150px;}
+	.item > img { min-width: 600px;}
+	.superego .carousel-inner { height: 390px }
+}
+@media (min-width: 1210px) {
+	.item > img { min-width: 768px;}
+	.super-e-bg-picture { background-image: url(/images/brands/superego/bg_aw_13.png); min-height: 1220px }
+}
+
+.super-e.item > img { min-width: 105%; }
+
+html { 
+	background-color: #101;
+}		
+body {
+	background-color: #101;
+}
+.content {
+	background-color: #101;
+}
+footer, .footer {
+	color: #aaa;
+	background-color: #101;
+	margin-top: 100px; 
+	padding: 20px 150px 50px 150px;
+	margin: 100px -100px 0px -100px;				
+	height: 500px;
+}
+			
+.center { text-align: center; }
+.lifted { margin-top: -20px }
+.download_button { position:  absolute; top: 10px; left: 10px; z-index: 999; }
+.fbi_logo_small {
+	width: 15%;
+}
+.brand_logo_small {
+	width: 15%;
+}
+.alpha60 {
+	/* Fallback for web browsers that doesn't support RGBa */
+	background: transparent;
+	/* RGBa with 0.6 opacity */
+	background: rgba(242, 242, 242, 0.6);
+	/* For IE 5.5 - 7 */
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+	/* For IE 8 */
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+}
+
+a span { color: #343;}
+
+@media (max-width: 768px) {
+	#fbi_logo {
+		display: block;   
+		margin-left: auto;   
+		margin-right: auto;
+		width: 50%;
+	}
+	.brand {
+		display: block;   
+		margin-left: auto;   
+		margin-right: auto;
+		width: 40%;
+		margin-top: 5em;
+	}
+
+}
+@media (min-width: 769px) {
+	#fbi_logo {
+		display: block;   
+		margin-left: auto;   
+		margin-right: auto;
+		width: 75%;
+	}
+	.brand {
+		display: inline;   
+		margin-top: 5em;
+	}
+	.brand40 {
+		height: 50px;
+	}
+	.brand20 {
+		height: 50px;
+		margin-left: 20px
+	}
+	.superego .span1 { height: 180px; margin-left: -20px !important; margin-right: 21px !important; width: 13.3%;}
+	.superego .menu_bar .span1 span { font-size: 24px; position: relative; left: 5px; top: 5px; width: 20px;}
+	.menu_bar .span1.offset1.first_menu { margin-left: 20px !important }
+}
+
+#sidebar {
+    float:left;
+    margin-left:0;
+}
+
+#content {
+    float:right !important;
+    margin-left:auto;
+}
+
+@media (max-width: 767px) {
+    #sidebar {
+        display: inline-block;
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    #content {
+        float:none !important;
+        margin-left:0;
+    }
+	.superego .menu_bar .span1 span { font-size: 2em; font-color: #000; width: 100%;}
+
+}
+a.brand { margin-top: auto; }

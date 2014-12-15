@@ -1,0 +1,52 @@
+!!! 5
+%html{ class: "no-js", lang: "da" } 
+	/ 	
+	/   - - - - - - - - - - - - - - - - - - - - -
+	/ 
+	/ 	   Title : WEB Appliances Crest Inc, Web Form Framework
+	/ 	   Author : Enrique Phillips 
+	/ 	   URL : http://www.wac.bz
+	/ 
+	/ 	- - - - - - - - - - - - - - - - - - - - - 
+	%head
+		= haml :head, :locals => { :brand => (brand rescue "") }
+		:css
+			html, body, .content { background-color: #111; }
+
+	%body
+		= haml "#{brand}_header".to_sym
+												
+		.container-fluid.content
+			.row-fluid
+				#content.span9.left_content
+					= haml :collection, :locals => { :files => files, :brand => brand, :season => season }
+
+				#sidebar.span3.center
+					= haml "#{brand}_sidebar".to_sym
+					
+
+		/ Modal
+		#fbinc.modal.hide.fade{ tabindex: "-1", role: "dialog",  :"aria-labelledby"=>"myModalLabelFBInc", :"aria-hidden"=>"true" }
+			.modal-header
+				%button.close{ type: "button", :"data-dismiss"=>"modal", :"aria-hidden"=>"true" } ×
+				%h3#myModalLabelFBInc FBInc 
+
+			.modal-body
+				= haml "#{brand}_footer".to_sym						
+				= haml :fbi_footer
+
+			.modal-footer
+				%button.btn{ :"data-dismiss"=>"modal", :"aria-hidden"=>"true" } Close
+					
+
+	= javascript_tags
+	
+	:javascript
+		$( function(){
+			$('.carousel').carousel()
+
+			$('#fbinc_link').on( 'click', function(e){
+				$( $(this).data('url') ).modal('show');
+				e.preventDefault();
+			})
+		})

@@ -1,0 +1,5 @@
+- Dir.entries( File.join(settings.public_folder, "images", "brands", brand, subfolder, muster[7..11], @img_res) ).sort.each do |file|
+	- next file if %w{ . .. .DS_Store}.include? file
+	- next file if file =~ /sample/
+	- next file unless file.include? muster[7..15]
+	%img{ width: "45%", src: "/images/brands/#{brand}/#{subfolder}/#{ muster[7..11] }/#{@img_res}/#{file}" }

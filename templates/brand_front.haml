@@ -1,0 +1,75 @@
+!!! 5
+%html{ class: "no-js", lang: "da" } 
+	/ 	
+	/   - - - - - - - - - - - - - - - - - - - - -
+	/ 
+	/ 	   Title : WEB Appliances Crest Inc, Web Form Framework
+	/ 	   Author : Enrique Phillips 
+	/ 	   URL : http://www.wac.bz
+	/ 
+	/ 	- - - - - - - - - - - - - - - - - - - - - 
+	%head
+		= haml :head, :locals => { :brand => (brand rescue "") }
+
+		:css
+			html, body { background-color: #111; }
+		
+		= haml :background, locals: { :brand => brand }
+		
+	%body
+		= haml "#{brand}_header".to_sym						
+		
+		.container-fluid.content{ style: "min-height: 768px; background: transparent"}
+			.row-fluid
+				.span3.center
+					= haml "#{brand}_sidebar".to_sym						
+					
+
+		/ Modals
+		#fbinc.modal.hide.fade{ tabindex: "-1", role: "dialog",  :"aria-labelledby"=>"myModalLabelFBInc", :"aria-hidden"=>"true" }
+			.modal-header
+				%button.close{ type: "button", :"data-dismiss"=>"modal", :"aria-hidden"=>"true" } ×
+				%h3#myModalLabelFBInc FBInc 
+
+			.modal-body
+				%p
+					= haml "#{brand}_footer".to_sym						
+				%p
+					= haml :fbi_footer
+
+			.modal-footer
+				%button.btn{ :"data-dismiss"=>"modal", :"aria-hidden"=>"true" } Close
+
+		#webshops.modal.hide.fade{ tabindex: "-1", role: "dialog",  :"aria-labelledby"=>"myModalLabelFBInc", :"aria-hidden"=>"true" }
+			.modal-header
+				%button.close{ type: "button", :"data-dismiss"=>"modal", :"aria-hidden"=>"true" } ×
+				%h3#myModalLabelWebshops Webshops
+
+			.modal-body
+				.row-fluid.center
+					%p
+						%a{ href: "http://www.trendyshop.dk"} Trendyshop
+					
+					%p
+						%a{ href: "http://www.stylepit.dk"} Stylepit
+
+			.modal-footer
+				%button.btn{ :"data-dismiss"=>"modal", :"aria-hidden"=>"true" } Close
+					
+
+	= javascript_tags
+	
+	:javascript
+		$( function(){
+			$('.carousel').carousel()
+
+			$('#fbinc_link').on( 'click', function(e){
+				$( $(this).data('url') ).modal('show');
+				e.preventDefault();
+			})
+			$('a.webshops').on( 'click', function(e){
+				$('#webshops').modal('show');
+				e.preventDefault();
+			})
+			
+		})

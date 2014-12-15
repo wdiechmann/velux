@@ -1,0 +1,78 @@
+!!! 5
+%html{ class: "no-js", lang: "da" } 
+	/ 	
+	/   - - - - - - - - - - - - - - - - - - - - -
+	/ 
+	/ 	   Title : WEB Appliances Crest Inc, Web Form Framework
+	/ 	   Author : Enrique Phillips 
+	/ 	   URL : http://www.wac.bz
+	/ 
+	/ 	- - - - - - - - - - - - - - - - - - - - - 
+	%head
+		= haml :head, :locals => { :brand => (brand rescue "") }
+		
+		
+	%body
+		%header.container-fluid{ style: "padding-top: 2em"}
+			.row-fluid{ style: "padding-bottom: 3em"}
+				.span4.offset4.center
+					%a#fbinc_link{ href: "#", :"data-url" => "#fbinc", style: "color: #fff; text-decoration: none" }
+						%img#fbi_logo{ src: "/images/logos/fashion_brands_inc_invert.png", width: "25%"}
+						%br
+						.lifted
+							read about FB.Inc
+						
+		.container-fluid.content
+			.row-fluid.center
+				.span8.offset2
+					%a{ href: "http://www.id-denim.dk" }
+						%img.brand.brand40{ src: "/images/logos/logo_iddenim_invers.png"}
+					%a{ href: "http://www.super-e.dk" }
+						%img.brand.brand40{ src: "/images/logos/logo_superego_invers.png"}
+			.row-fluid.center
+				.span9.offset1
+					%a{ href: "/jeff" }
+						%img.brand.brand20{ src: "/images/logos/logo_jeff_invers.png"}
+					%a{ href: "/monday" }
+						%img.brand.brand20{ src: "/images/logos/logo_monday_invers.png"}
+					%a{ href: "/maybee" }
+						%img.brand.brand20{ src: "/images/logos/logo_maybee_invers.png"}
+					%a{ href: "/rebus_boys" }
+						%img.brand.brand20{ style: "height: 35px;margin-top: 75px",src: "/images/logos/rebus_boys.png"}
+					%a{ href: "/rebus_girls" }
+						%img.brand.brand20{ style: "height: 35px;margin-top: 75px", src: "/images/logos/rebus_girls.png"}
+			.row-fluid.center
+				.span8.offset2
+					-
+			
+		%footer.container-fluid{ style: "margin-top: 100px; padding: 20px 150px 0px 150px;"}
+			.row-fluid
+				#puzzle_game.span10.offset1
+					Har du lyst at samle vores tøj som puslespil? 
+					%a{ href: "/fbi/puzzle"} Prøv puslespillet
+			.row-fluid{ style: "min-height: 20px" }
+
+
+		/ Modal
+		#fbinc.modal.hide.fade{ tabindex: "-1", role: "dialog",  :"aria-labelledby"=>"myModalLabelFBInc", :"aria-hidden"=>"true" }
+			.modal-header
+				%button.close{ type: "button", :"data-dismiss"=>"modal", :"aria-hidden"=>"true" } ×
+				%h3#myModalLabelFBInc FBInc 
+
+			.modal-body
+				= haml :fbi_footer
+
+			.modal-footer
+				%button.btn{ :"data-dismiss"=>"modal", :"aria-hidden"=>"true" } Close
+					
+
+	= javascript_tags
+	
+	:javascript
+		$( function(){
+			$('#fbinc_link').on( 'click', function(e){
+				$( $(this).data('url') ).modal('show');
+				e.preventDefault();
+			})
+		})
+

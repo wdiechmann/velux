@@ -1,0 +1,40 @@
+!!! 5
+%html{ class: "no-js", lang: "da" } 
+	/ 	
+	/   - - - - - - - - - - - - - - - - - - - - -
+	/ 
+	/ 	   Title : WEB Appliances Crest Inc, Web Form Framework
+	/ 	   Author : Enrique Phillips 
+	/ 	   URL : http://www.wac.bz
+	/ 
+	/ 	- - - - - - - - - - - - - - - - - - - - - 
+	%head
+		= haml :head, :locals => { :brand => (brand rescue "") }
+
+		= haml :iddenim_css
+		
+		:css
+			.flash_guide { margin-top: 100px }
+		
+		
+	%body
+		.navbar-wrapper
+			.container
+				= haml "#{brand}_menu".to_sym
+		
+		
+		.container-fluid.flash_guide.content{ style: "min-height: 768px; background: transparent"}
+			.row-fluid
+				.span12.center
+					= "#{book}"						
+					
+		%footer.footer.container-fluid
+			.row-fluid
+				#about.span10.offset1
+					= haml "#{brand}_footer".to_sym						
+			.row-fluid{style: "margin-top: 20px"}
+				#about.span10.offset1
+					= haml :fbi_footer
+
+
+	= javascript_tags
