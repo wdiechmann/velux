@@ -8,20 +8,10 @@
 #- - - - - - - - - - - - - - - - - - - - - */
 require "sinatra/namespace"
 # require "pry"
-class LanielApp < Sinatra::Base
-
-  register Sinatra::Namespace
-
-  namespace "/fbi" do
-
-    get "/puzzle" do
-      haml :puzzle
-    end
-
-  end
+class VeluxApp < Sinatra::Base
 
   get '/' do
-    haml :fb_index, :format => :html5
+    haml :velux_index, :format => :html5
   end
 
 

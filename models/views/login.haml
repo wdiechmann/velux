@@ -1,0 +1,51 @@
+:css
+	.modal-header,
+	.modal-footer { background-color: #7A8C89;}
+	.modal-body { background-color: #A88C8C;}
+	.control-label { font-weight: bold; color: white; margin-right: 10px;}
+	h3 { color: #909D9E;}
+
+.modal-header
+	%button.close{ type: "button", :"data-dismiss"=>"modal", :"aria-hidden"=>"true" } ×
+	%h3 Login
+	/ =styled_flash
+.modal-body
+	%form.form-horizontal{:action => "/login", :method => "post"}
+		.form-group.form-group-sm
+			%label.col-sm-1.control-label brugernavn
+			.col-sm-10
+				%input.form-control{:id => "user_email", :name => "name", :size => 30, :type => "text"}
+			%br
+		
+		.form-group.form-group-sm
+			%label.col-sm-1.control-label adgangskode
+			.col-sm-10
+				%input.form-control{:id => "user_password", :name => "password", :size => 30, :type => "password"}
+				
+.modal-footer
+	/ %button.btn.signup Opret bruger
+	%button.btn.submit-form Log ind
+	%button.btn{ :"data-dismiss"=>"modal", :"aria-hidden"=>"true" } Luk
+
+	/ .buttons
+	/ 	%input{:value => "Login", :type => "submit"}
+	/ 	%a{:href => "/signup", :class => 'sinatra_authentication_link'}
+	/ 		Sign up
+
+:javascript
+	$('.submit-form').on('click',function(){
+		var jqxhr = $.post('/login', $('.form-horizontal').serialize() )
+		  .done(function() {
+				getNewProject();
+				$('#projects').html(response);
+		  // })
+		  // .fail(function() {
+		  // 				// alert('fail');
+		  // 				$('#projects').html(response)
+		  // })
+		  // .always(function() {
+		  //   // alert( "finished" );
+		  });
+			
+	})
+	

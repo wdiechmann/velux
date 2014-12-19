@@ -1,0 +1,121 @@
+.modal-header
+	%button.close{ type: "button", :"data-dismiss"=>"modal", :"aria-hidden"=>"true" } ×
+	%h3 Projekter
+	= styled_flash
+	
+.modal-body
+	- action = @project.new_record? ? "POST" : "PUT"
+	%form.form-horizontal{ role: "form", action: "/projects", method:"#{action}", multipart: true}
+		%input{ type: :hidden, name: "project[id]", value: "#{@project.id}"}
+		.form-group.form-group-sm
+			%label.col-sm-1.control-label titel
+			.col-sm-1
+				%input.form-control.title{ type:"text", name: "project[title]", value:"#{ @project.title}"}
+			%br
+		.form-group.form-group-sm
+			%label.col-sm-2.control-label adresse
+			.col-sm-10
+				%input.form-control{ type:"text", name: "project[address]", value: "#{@project.lng_lat}"}
+			%br
+		.form-group.form-group-sm
+			%label.col-sm-2.control-label Billede
+			.col-sm-10
+				%input.form-control{ type: "file", id: "image", name: "image", style: "display:none" }
+				.input-append
+					%input.input-small{ id: "imageCover", name: "project[image]", type: "text", value: "#{@project.image? ? @project.image.identifier : ''}"}
+					%a.btn.search_image{ href:""} Søg
+				- if @project.image?
+					= image_tag @project.image.thumb.url
+
+
+			%br
+		.form-group.form-group-sm
+			%label.col-sm-2.control-label tekst
+			.col-sm-10
+				%textarea.form-control{ name: "project[body]", rows: 5, placeholder: "header __ rubrik"}
+					= @project.body
+			%br
+		.form-group.form-group-sm
+			%label.col-sm-2.control-label links (adskilt af mellemrum)
+			.col-sm-10
+				%textarea.form-control{ name: "project[links]", rows: 4, placeholder: "[tekst](http://www.pol.dk)"}
+					= @project.links
+			%br
+
+
+
+.modal-footer
+	%p.text-left
+		Aktuelt antal projekter: 
+		= Project.all.count
+	%p.text-right
+		%button.btn.search-form Søg
+		%button.btn.submit-form Opdatér
+		%button.btn{ :"data-dismiss"=>"modal", :"aria-hidden"=>"true" } Luk
+
+:javascript
+	$('.search-form').on('click', function(){
+		var url='/projects?q='+$('input.title').val();
+		console.log(url);
+		var jqxhr = $.get(url)
+		  .done(function(response) {
+				$('#projects').html(response);
+		  // })
+		  // .fail(function() {
+		  // 				// alert('fail');
+		  // 				$('#projects').html(response)
+		  // })
+		  // .always(function() {
+		  //   // alert( "finished" );
+		  });
+		
+	})
+	
+	$('a.search_image').on('click', function(e){
+		e.preventDefault();
+		$('input[id=image]').livequery(function() {
+	    $(this).ajaxyUpload({
+	      // set url
+	      url : '/upload',
+	      // upload succeded callback
+	      success : function(data){
+					$('#imageCover').val(data.filename);
+	      },
+	      // upload start callback
+	      start : function() {
+	        $('div.confirmation').remove();
+	        $(this).closest('.form-group').css('background-color', '#dff');
+	      },
+	      // completed callback for both success and error
+	      complete : function() {
+	      },
+	      // upload error callback
+	      error : function(data) {
+	        $(this).closest('.form-group').css('background-color', '#fdd');
+	      }
+	    });
+		});
+		$('input[id=image]').click();					
+	})
+	
+	$('.submit-form').on('click',function(){
+		// $('#image').toggle();
+		data = $('.form-horizontal').serialize();
+		// $('#image').toggle();
+		var jqxhr = $.ajax({
+				url: '/projects', 
+				type: $('.form-horizontal').attr('method'),
+				data: data 
+			})
+		  .done(function(response) {
+				$('#projects').html(response);
+		  // })
+		  // .fail(function() {
+		  // 				// alert('fail');
+		  // 				$('#projects').html(response)
+		  // })
+		  // .always(function() {
+		  //   // alert( "finished" );
+		  });
+			
+	})

@@ -9,7 +9,7 @@
 	/ 
 	/ 	- - - - - - - - - - - - - - - - - - - - - 
 	%head
-		= haml :head, :locals => { :brand => (brand rescue "") }
+		= haml :head, :locals => { }
 		:css
 			html, body, .content { background-color: #111; }
 			html, body, #map-canvas {
@@ -17,39 +17,18 @@
 				margin: 0px;
 				padding: 0px
 			}
-			.marker { width: 200px;}
+			.marker { width: 200px; }
 			#map-canvas img { max-width:none; }
+			
 
 	%body
-		/ %table{ style: "background-color: white;width:100%"}
-		/ 	%thead
-		/ 		%td ID
-		/ 		%td Navn
-		/ 		%td By
-		/ 		%td Brands
-		/ 	%tbody
-		/ 		- Customer.all.each do |customer|
-		/ 			%tr{style: "border: 1px solid #aaaaaa"}
-		/ 				%td= customer.id
-		/ 				%td= customer.name
-		/ 				%td= customer.zip_city
-		/ 				%td
-		/
 		
 		#map-canvas
 		/ %img{ src: "#{image}"}
 
 		/ Modals
-		#countries.modal.hide.fade{ tabindex: "-1", role: "dialog",  :"aria-labelledby"=>"myModalLabelFBInc", :"aria-hidden"=>"true" }
-			.modal-header
-				%button.close{ type: "button", :"data-dismiss"=>"modal", :"aria-hidden"=>"true" } ×
-				%h3#myModalLabelFBInc FBInc 
+		#projects.modal.hide.fade{ tabindex: "-1", role: "dialog",  :"aria-labelledby"=>"myModalLabelFBInc", :"aria-hidden"=>"true" }
 
-			.modal-body
-				%img{ style: "width: 100%", src: "/images/countries.png"}
-
-			.modal-footer
-				%button.btn{ :"data-dismiss"=>"modal", :"aria-hidden"=>"true" } Close
 		
 		%script{ src:"https://maps.googleapis.com/maps/api/js?v=3.exp"}
 
@@ -62,7 +41,7 @@
 			
 			var map;
 			var shops = [
-				#{ Customer.all.where( "brands like ?", "%#{brand}%" ).collect{ |c| c.js_arr }.compact.join }
+				#{ Project.all.collect{ |c| c.js_arr }.compact.join }
 			]
 			// shops[shops.length] = { name: '<h3>Sverige</h3><p><b>kontakt:</b> Torben Kjær</p><p><b>email:</b><a href="mailto:torben@fbinc.dk">torben@fbinc</a></p><p><b>tlf:</b>+45 21664994</p>', lat: 57.1831605, lng: 14.0478214, marker: null };
 			// shops[shops.length] = { name: '<h3>Tyskland</h3><p><b>kontakt:</b> Torben Kjær</p><p><b>email:</b><a href="mailto:torben@fbinc.dk">torben@fbinc</a></p><p><b>tlf:</b>+45 21664994</p>', lat: 52.52000659999999, lng: 13.404954, marker: null };
@@ -96,9 +75,9 @@
 					'dummy',
 					'<h5>$1</h5>',
 					'<p><small>$1</small></p>',
-					'<p><b>kontakt:</b>$1</p>',
-					'<p><b>email:</b><a href="mailto:$1">$1</a></p>',
-					'<p><b>tlf:</b>$1</p>'
+					'<p><img src="$1" /></p>',
+					'<p><small>$1</small></p>',
+					'<p><small>$1</small></p>'
 				]
 				
 				return tmpls[nbr].replace(/\$1/g, content);
@@ -106,16 +85,11 @@
 			
 			function formatFields(shop){
 				var card = '';
-				if (shop.country=='Danmark'){
-					card = formatField(1,shop.name) + 
-					formatField(2, trimAddress(shop.street + '<br/>' + shop.zip_city + '<br/>') + country(shop.country))
-				} else {
-					card = formatField(1,'Agent') + 
-					formatField(2, trimAddress(shop.street + '<br/>' + shop.zip_city + '<br/>') + country(shop.country)) +
-					formatField(3,shop.contact) +
-					formatField(4,shop.email) +
-					formatField(5,shop.phone)
-				}
+				card = formatField(1, shop.title) +
+				formatField(2,shop.header) +
+				formatField(3,shop.image) +
+				formatField(4,shop.rubrik) +
+				formatField(5,shop.links)
 				return card;
 			}
 			
@@ -128,6 +102,33 @@
 				   infoWindow.open(map,shop.marker);
 				});
 				
+			}
+			
+			function getSignUp(){
+				var jqxhr = $.get('/signup',function(response){
+					$('#projects').html(response);
+				})
+			}
+			
+			function getSignIn(){
+				var jqxhr = $.get('/login',function(response){
+					$('#projects').html(response);
+				})
+			}
+			
+			function getNewProject(){
+				var jqxhr = $.get( "/projects/new", function(response) {
+				  $('#projects').html(response);
+				})
+				  .done(function() {
+				    // alert( "second success" );
+				  })
+				  .fail(function() {
+				    getSignIn();
+				  })
+				  .always(function() {
+				    // alert( "finished" );
+				  });
 			}
 					
 			function initialize() {
@@ -174,7 +175,15 @@
 					handleNoGeolocation(false);
 				}
 				
-				$('#countries').modal('show');
+				
+				
+				$('body').keydown( function(e){
+					if (e.which==117){
+						getNewProject();
+						$('#projects').modal('show');
+					}
+				})
+				
 			}
 			
 			function handleNoGeolocation(errorFlag) {

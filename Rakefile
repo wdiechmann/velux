@@ -3,7 +3,7 @@
 # for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
 
 # ActiveRecord
-require "./laniel"
+require "./velux_app"
 require "sinatra/activerecord/rake"
 
 

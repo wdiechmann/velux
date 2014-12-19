@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
-gem "rack", "1.4.4"
+gem "rack" #, "1.4.4"
 gem "sinatra", :require => "sinatra/base"
 gem "haml"
 gem "sinatra-head"
 gem "sinatra-contrib"
-# gem 'pry' , :require => false                            # or perhaps just gem "debugger" ??!
+gem 'sinatra-static-assets'
 gem 'vlad'
 gem 'vlad-git'
 
@@ -13,11 +13,18 @@ gem 'geocoder'
 gem "sinatra-activerecord"
 gem "mysql2"
 
-require 'carrierwave'
+gem 'carrierwave'
+gem 'sinatra-flash'
+gem 'mini_magick'
+gem 'rdiscount'
 
 group :development do
   gem "shotgun"
   gem "tux"
-  gem "rake"
+  #
+  gem 'awesome_print'
+  gem 'racksh'
+  gem 'pry'
+  gem 'pry-byebug'
 
 end

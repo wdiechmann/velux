@@ -1,0 +1,44 @@
+.modal-header
+	%button.close{ type: "button", :"data-dismiss"=>"modal", :"aria-hidden"=>"true" } ×
+	%h3 Projekter
+.modal-body
+	%form.form-horizontal{ role: "form", action: "/projects", method:"post", enctype:"multipart/form-data"}
+		.form-group.form-group-sm
+			%label.col-sm-1.control-label titel
+			.col-sm-1
+				%input.form-control{ type:"text", name: "project[title]", value: @project.title }
+			%br
+		.form-group.form-group-sm
+			%label.col-sm-2.control-label adresse
+			.col-sm-10
+				%input.form-control{ type:"text", name: "project[address]", value: @project.address}
+			%br
+		.form-group.form-group-sm
+			%label.col-sm-2.control-label Billede
+			.col-sm-10
+				%input.form-control{ type: "file", id: "image", name: "project[image]", style: "display:none" }
+				.input-append
+					%input.input-small{ id: "imageCover", type: "text"}
+					%a.btn.search_image{ href:""} Søg
+			%br
+		.form-group.form-group-sm
+			%label.col-sm-2.control-label tekst
+			.col-sm-10
+				%textarea.form-control{ name: "project[body]", value: @project.body, rows: 5}
+			%br
+		.form-group.form-group-sm
+			%label.col-sm-2.control-label links (adskilt af mellemrum)
+			.col-sm-10
+				%textarea.form-control{ name: "project[links]", rows: 4, value: @project.links, placeholder: "[tekst](http://www.pol.dk)"}
+			%br
+
+
+
+.modal-footer
+	%p.text-left
+		Aktuelt antal projekter: 
+		= Project.all.count
+	%p.text-right
+		%button.btn{  :"data-dismiss"=>"modal", :"aria-hidden"=>"true"} Søg
+		%button.btn{ :"data-dismiss"=>"modal", :"aria-hidden"=>"true" } Opdatér
+		%button.btn{ :"data-dismiss"=>"modal", :"aria-hidden"=>"true" } Luk

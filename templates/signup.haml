@@ -1,0 +1,65 @@
+:css
+	.modal-header,
+	.modal-footer { background-color: #7A8C89;}
+	.modal-body { background-color: #A88C8C;}
+	.control-label { font-weight: bold; color: white; margin-right: 10px;}
+	h3 { color: #909D9E;}
+
+.modal-header
+	%button.close{ type: "button", :"data-dismiss"=>"modal", :"aria-hidden"=>"true" } ×
+	%h3 Opret ny bruger
+	=styled_flash
+.modal-body
+	%form.form-horizontal{:action => "/signup", :method => "post"}
+		.form-group.form-group-sm
+			%label.col-sm-1.control-label for- og efternavn
+			.col-sm-10
+				%input.form-control{:id => "user_name", :name => "user[name]", :size => 30, :type => "text", value: "#{@user.name}"}
+			%br
+		
+		.form-group.form-group-sm
+			%label.col-sm-1.control-label brugernavn (email adresse)
+			.col-sm-10
+				%input.form-control{:id => "user_email", :name => "user[email]", :size => 30, :type => "text", value: "#{@user.email}"}
+			%br
+		
+		.form-group.form-group-sm
+			%label.col-sm-1.control-label adgangskode
+			.col-sm-10
+				%input.form-control{:id => "user_password", :name => "user[password]", :size => 30, :type => "password"}
+			%br
+		
+		.form-group.form-group-sm
+			%label.col-sm-1.control-label bekræft adgangskode
+			.col-sm-10
+				%input.form-control{ :id => "user_password_confirmation", :name => "user[password_confirmation]", :size => 30, :type => "password" }
+				
+.modal-footer
+	%button.btn.signin Log på
+	%button.btn.submit-form Opret 
+	%button.btn{ :"data-dismiss"=>"modal", :"aria-hidden"=>"true" } Luk
+
+	/ .buttons
+	/ 	%input{:value => "Login", :type => "submit"}
+	/ 	%a{:href => "/signup", :class => 'sinatra_authentication_link'}
+	/ 		Sign up
+
+
+:javascript
+	$('.signin').on('click',function(){
+		getSignIn();
+	})
+	$('.submit-form').on('click',function(){
+		var jqxhr = $.post('/signup', $('.form-horizontal').serialize() )
+		  .done(function() {
+				$('#projects').html(response);
+		  })
+		  .fail(function() {
+				// alert('fail');
+				$('#projects').html(response)
+		  })
+		  .always(function() {
+		    // alert( "finished" );
+		  });
+			
+	})

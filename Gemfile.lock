@@ -1,40 +1,68 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activemodel (4.1.7)
-      activesupport (= 4.1.7)
+    activemodel (4.1.8)
+      activesupport (= 4.1.8)
       builder (~> 3.1)
-    activerecord (4.1.7)
-      activemodel (= 4.1.7)
-      activesupport (= 4.1.7)
+    activerecord (4.1.8)
+      activemodel (= 4.1.8)
+      activesupport (= 4.1.8)
       arel (~> 5.0.0)
-    activesupport (4.1.7)
+    activesupport (4.1.8)
       i18n (~> 0.6, >= 0.6.9)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
-    backports (2.6.5)
+    awesome_print (1.2.0)
+    backports (3.6.4)
     bond (0.5.1)
     builder (3.2.2)
-    eventmachine (1.0.0)
+    byebug (3.5.1)
+      columnize (~> 0.8)
+      debugger-linecache (~> 1.2)
+      slop (~> 3.6)
+    carrierwave (0.10.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
+    coderay (1.1.0)
+    columnize (0.9.0)
+    debugger-linecache (1.2.0)
     geocoder (1.2.6)
-    haml (3.1.7)
+    haml (4.0.6)
+      tilt
     i18n (0.6.11)
     json (1.8.1)
-    minitest (5.4.3)
+    method_source (0.8.2)
+    mime-types (2.4.3)
+    mini_magick (4.0.1)
+    minitest (5.5.0)
+    multi_json (1.10.1)
     mysql2 (0.3.17)
     open4 (1.3.4)
-    rack (1.4.4)
-    rack-protection (1.3.2)
+    pry (0.10.1)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+    pry-byebug (2.0.0)
+      byebug (~> 3.4)
+      pry (~> 0.10)
+    rack (1.5.2)
+    rack-protection (1.5.3)
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
-    rake (10.3.2)
+    racksh (1.0.0)
+      rack (>= 1.0)
+      rack-test (>= 0.5)
+    rake (10.4.2)
     rake-remote_task (2.2.2)
       open4 (~> 1.0)
       rake (>= 0.8, < 11.0)
+    rdiscount (1.6.8)
     ripl (0.7.1)
       bond (~> 0.5.1)
     ripl-multi_line (0.3.1)
@@ -45,23 +73,28 @@ GEM
       ripl (>= 0.7.0)
     shotgun (0.9)
       rack (>= 1.0)
-    sinatra (1.3.3)
-      rack (~> 1.3, >= 1.3.6)
-      rack-protection (~> 1.2)
-      tilt (~> 1.3, >= 1.3.3)
+    sinatra (1.4.5)
+      rack (~> 1.4)
+      rack-protection (~> 1.4)
+      tilt (~> 1.3, >= 1.3.4)
     sinatra-activerecord (2.0.3)
       activerecord (>= 3.2)
       sinatra (~> 1.0)
-    sinatra-contrib (1.3.2)
+    sinatra-contrib (1.4.2)
       backports (>= 2.0)
-      eventmachine
+      multi_json
       rack-protection
       rack-test
-      sinatra (~> 1.3.0)
+      sinatra (~> 1.4.0)
       tilt (~> 1.3)
+    sinatra-flash (0.3.0)
+      sinatra (>= 1.0.0)
     sinatra-head (0.1.2)
+    sinatra-static-assets (1.0.4)
+      sinatra (>= 1.1.0)
+    slop (3.6.0)
     thread_safe (0.3.4)
-    tilt (1.3.3)
+    tilt (1.4.1)
     tux (0.3.0)
       ripl (>= 0.3.5)
       ripl-multi_line (>= 0.2.4)
@@ -79,16 +112,24 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  awesome_print
+  carrierwave
   geocoder
   haml
+  mini_magick
   mysql2
-  rack (= 1.4.4)
-  rake
+  pry
+  pry-byebug
+  rack
+  racksh
+  rdiscount
   shotgun
   sinatra
   sinatra-activerecord
   sinatra-contrib
+  sinatra-flash
   sinatra-head
+  sinatra-static-assets
   tux
   vlad
   vlad-git
