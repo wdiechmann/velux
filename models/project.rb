@@ -32,10 +32,11 @@ class Project < ActiveRecord::Base
         image: '%s',
         rubrik: '%s',
         links: '%s',
+        amount: '%s',
         lat: %s,
         lng: %s,
         marker: null
-     }," % [self.title, RDiscount.new(header).to_html.strip, img, RDiscount.new(rubrik).to_html.strip, RDiscount.new(self.links).to_html.strip, lng, lat]
+     }," % [self.title, RDiscount.new(header).to_html.strip, img, RDiscount.new(rubrik).to_html.strip, RDiscount.new(self.links).to_html.strip, RDiscount.new(self.amount).to_html.strip, lng, lat]
   end
 
   def load_from_json file_name
@@ -53,5 +54,5 @@ class Project < ActiveRecord::Base
     return data
   end
 
-  
+
 end

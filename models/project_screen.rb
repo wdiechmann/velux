@@ -1,8 +1,9 @@
+APP_ROOT = "/Users/walther/Documents/Projects/Rails/velux"
 class ProjectScreen < Sinatra::Base
 
   register Sinatra::Flash
   register Sinatra::StaticAssets
-  
+
   CarrierWave.root = File.join APP_ROOT, "public"
 
   # before do
@@ -10,23 +11,23 @@ class ProjectScreen < Sinatra::Base
   #     redirect '/login'
   #   end
   # end
-  
+
   get "/projects" do
     #?q=anders
     @project = Project.all.where("title like ?","%#{params[:q]}%").first
     haml :project_new
   end
-  
+
   get "/projects/new" do
     @project ||= Project.new
     haml :project_new
   end
-  
+
   get "/projects/:id" do |id|
     @project = Project.find(id)
     haml :project_new
   end
-  
+
   post "/projects" do
     fp = File.join( APP_ROOT,'public/images/uploads', params[:project][:image] )
     @project = Project.create(params[:project])
@@ -41,10 +42,15 @@ class ProjectScreen < Sinatra::Base
       redirect back
     end
   end
-  
+
   put "/projects" do
-    fp = File.join( APP_ROOT,'public/images/uploads', params[:project][:image] )
     @project = Project.find(params["project"]["id"])
+    if params["project"]["image"] != ""
+      fp = File.join( APP_ROOT,'public/images/uploads', params[:project][:image] )
+    else
+      fp = nil
+    end
+    puts params
     state = false
     if @project.update_attributes(params["project"])
       @project.geolocate
@@ -58,5 +64,5 @@ class ProjectScreen < Sinatra::Base
       redirect back
     end
   end
-  
+
 end

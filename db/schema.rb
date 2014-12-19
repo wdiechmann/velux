@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20141215171656) do
     t.string   "lng_lat"
     t.string   "title"
     t.string   "image"
+    t.string   "amount"
     t.text     "body"
     t.text     "links"
     t.datetime "created_at"

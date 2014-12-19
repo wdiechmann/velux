@@ -7,13 +7,13 @@ class CreateProjects < ActiveRecord::Migration
       t.string :lng_lat
       t.string :title
       t.string :image
-      # t.string :amount
+      t.string :amount
       t.text :body
       t.text :links
       t.timestamps
     end
   end
- 
+
   def down
     drop_table :projects
   end

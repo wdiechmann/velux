@@ -1,13 +1,13 @@
 !!! 5
-%html{ class: "no-js", lang: "da" } 
-	/ 	
+%html{ class: "no-js", lang: "da" }
+	/
 	/   - - - - - - - - - - - - - - - - - - - - -
-	/ 
+	/
 	/ 	   Title : WEB Appliances Crest Inc, Web Form Framework
-	/ 	   Author : Enrique Phillips 
+	/ 	   Author : Enrique Phillips
 	/ 	   URL : http://www.wac.bz
-	/ 
-	/ 	- - - - - - - - - - - - - - - - - - - - - 
+	/
+	/ 	- - - - - - - - - - - - - - - - - - - - -
 	%head
 		= haml :head, :locals => { }
 		:css
@@ -19,26 +19,26 @@
 			}
 			.marker { width: 200px; }
 			#map-canvas img { max-width:none; }
-			
+
 
 	%body
-		
+
 		#map-canvas
 		/ %img{ src: "#{image}"}
 
 		/ Modals
 		#projects.modal.hide.fade{ tabindex: "-1", role: "dialog",  :"aria-labelledby"=>"myModalLabelFBInc", :"aria-hidden"=>"true" }
 
-		
+
 		%script{ src:"https://maps.googleapis.com/maps/api/js?v=3.exp"}
 
 		= javascript_tags
-		
+
 		:javascript
 			// Note: This example requires that you consent to location sharing when
 			// prompted by your browser. If you see a blank space instead of the map, this
 			// is probably because you have denied permission for location sharing.
-			
+
 			var map;
 			var shops = [
 				#{ Project.all.collect{ |c| c.js_arr }.compact.join }
@@ -51,7 +51,7 @@
 			// shops[shops.length] = { name: '<h3>Island</h3><p><b>kontakt:</b> Halldor</p><p><b>email:</b><a href="mailto:birnag@hj.is">birnag@hj.is</a></p><p><b>tlf:</b>+35 45636300</p>', lat: 64.963051, lng: -19.020835, marker: null };
 			// shops[shops.length] = { name: '<h3>Grønland</h3><p><b>kontakt:</b> Torben Kjær</p><p><b>email:</b><a href="mailto:torben@fbinc.dk">torben@fbinc</a></p><p><b>tlf:</b>+45 21664994</p>', lat: 71.706936, lng: -42.604303, marker: null };
 			// shops[shops.length] = { name: '<h3>Finland</h3><p><b>kontakt:</b> Pekko Hokkanen</p><p><b>email:</b><a href="mailto:Pekko.hokkanen@goodwear.fi">Pekko.hokkanen@goodwear.fi</a></p><p><b>tlf:</b>+358 50 5557790</p>', lat: 61.92410999999999, lng: 25.748151, marker: null };
-			
+
 			// $1 Firmanavn
 			//    adresse
 			//    postnr By
@@ -60,16 +60,16 @@
 			// $3 email
 			// $4 tlf
 			var html_template = '<div class="marker">$1</div>';
-			
+
 			function country(c){
 				return c.replace(/danmark/i,'').trim();
 			}
-			
+
 			function trimAddress(adr){
-				if(adr.replace(/\<br\/\>/g,'').trim()==''){ return ''}					
+				if(adr.replace(/\<br\/\>/g,'').trim()==''){ return ''}
 				return adr;
 			}
-			
+
 			function formatField(nbr,content) {
 				tmpls = [
 					'dummy',
@@ -77,45 +77,47 @@
 					'<p><small>$1</small></p>',
 					'<p><img src="$1" /></p>',
 					'<p><small>$1</small></p>',
+					'<p><small>$1</small></p>',
 					'<p><small>$1</small></p>'
-				]
-				
+					]
+
 				return tmpls[nbr].replace(/\$1/g, content);
 			}
-			
+
 			function formatFields(shop){
 				var card = '';
 				card = formatField(1, shop.title) +
 				formatField(2,shop.header) +
 				formatField(3,shop.image) +
 				formatField(4,shop.rubrik) +
-				formatField(5,shop.links)
+				formatField(5,shop.links) +
+				formatField(6,shop.amount)
 				return card;
 			}
-			
+
 			function markerInfoWindow(shop,map){
-				
+
 				var infoWindow = new google.maps.InfoWindow();
-			
+
 				google.maps.event.addListener(shop.marker, 'click', function () {
 				   infoWindow.setContent( html_template.replace(/\$1/,formatFields(shop)) );
 				   infoWindow.open(map,shop.marker);
 				});
-				
+
 			}
-			
+
 			function getSignUp(){
 				var jqxhr = $.get('/signup',function(response){
 					$('#projects').html(response);
 				})
 			}
-			
+
 			function getSignIn(){
 				var jqxhr = $.get('/login',function(response){
 					$('#projects').html(response);
 				})
 			}
-			
+
 			function getNewProject(){
 				var jqxhr = $.get( "/projects/new", function(response) {
 				  $('#projects').html(response);
@@ -130,20 +132,20 @@
 				    // alert( "finished" );
 				  });
 			}
-					
+
 			function initialize() {
 				var mapOptions = {
 					zoom: 9
 				};
 				map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-				
+
 				var country = '';
 				for(var i = 0, l = shops.length; i < l; ++i) {
 					var myLatlng = new google.maps.LatLng(shops[i].lat,shops[i].lng);
 					var mapOptions = {
 					  zoom: 4,
 					  center: myLatlng
-					}					
+					}
 					// if (shops[i].country!=country){
 					// }
 					country = shops[i].country;
@@ -154,18 +156,18 @@
 					});
 					markerInfoWindow(shops[i],map);
 				}
-				
+
 				// Try HTML5 geolocation
 				if(navigator.geolocation) {
 					navigator.geolocation.getCurrentPosition(function(position) {
 						var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-					
+
 						var infowindow = new google.maps.InfoWindow({
 							map: map,
 							position: pos,
 							// content: 'Her er du - cirka :)'
 						});
-					
+
 						map.setCenter(pos);
 					}, function() {
 						handleNoGeolocation(true);
@@ -174,36 +176,36 @@
 					// Browser doesn't support Geolocation
 					handleNoGeolocation(false);
 				}
-				
-				
-				
+
+
+
 				$('body').keydown( function(e){
 					if (e.which==117){
 						getNewProject();
 						$('#projects').modal('show');
 					}
 				})
-				
+
 			}
-			
+
 			function handleNoGeolocation(errorFlag) {
 				if (errorFlag) {
 					var content = 'Error: The Geolocation service failed.';
 				} else {
 					var content = 'Error: Your browser doesn\'t support geolocation.';
 				}
-				
+
 				var options = {
 					map: map,
 					position: new google.maps.LatLng(60, 105),
 					content: content
 				};
-				
+
 				var infowindow = new google.maps.InfoWindow(options);
 				map.setCenter(options.position);
 			}
-			
-			
+
+
 			// function initialize() {
 			//   var myLatlng = new google.maps.LatLng(-25.363882,131.044922);
 			//   var mapOptions = {
@@ -220,4 +222,3 @@
 			// }
 
 			google.maps.event.addDomListener(window, 'load', initialize);
-		

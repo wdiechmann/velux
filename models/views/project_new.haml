@@ -2,7 +2,7 @@
 	%button.close{ type: "button", :"data-dismiss"=>"modal", :"aria-hidden"=>"true" } ×
 	%h3 Projekter
 	= styled_flash
-	
+
 .modal-body
 	- action = @project.new_record? ? "POST" : "PUT"
 	%form.form-horizontal{ role: "form", action: "/projects", method:"#{action}", multipart: true}
@@ -13,11 +13,19 @@
 				%input.form-control.title{ type:"text", name: "project[title]", value:"#{ @project.title}"}
 			%br
 		.form-group.form-group-sm
-			%label.col-sm-2.control-label adresse
+			%label.col-sm-2.control-label
+				adresse
 			.col-sm-10
-				%input.form-control{ type:"text", name: "project[address]", value: "#{@project.lng_lat}"}
+				%input.form-control{ type:"text", name: "project[address]", value: "#{@project.address}"}
+				= "(#{@project.lng_lat})"
 			%br
 		.form-group.form-group-sm
+			%label.col-sm-2.control-label
+				bevilling
+			.col-sm-10
+				%input.form-control{ type:"text", name: "project[amount]", value: "#{@project.amount}"}
+			%br
+			.form-group.form-group-sm
 			%label.col-sm-2.control-label Billede
 			.col-sm-10
 				%input.form-control{ type: "file", id: "image", name: "image", style: "display:none" }
@@ -46,7 +54,7 @@
 
 .modal-footer
 	%p.text-left
-		Aktuelt antal projekter: 
+		Aktuelt antal projekter:
 		= Project.all.count
 	%p.text-right
 		%button.btn.search-form Søg
@@ -68,9 +76,9 @@
 		  // .always(function() {
 		  //   // alert( "finished" );
 		  });
-		
+
 	})
-	
+
 	$('a.search_image').on('click', function(e){
 		e.preventDefault();
 		$('input[id=image]').livequery(function() {
@@ -95,17 +103,17 @@
 	      }
 	    });
 		});
-		$('input[id=image]').click();					
+		$('input[id=image]').click();
 	})
-	
+
 	$('.submit-form').on('click',function(){
 		// $('#image').toggle();
 		data = $('.form-horizontal').serialize();
 		// $('#image').toggle();
 		var jqxhr = $.ajax({
-				url: '/projects', 
+				url: '/projects',
 				type: $('.form-horizontal').attr('method'),
-				data: data 
+				data: data
 			})
 		  .done(function(response) {
 				$('#projects').html(response);
@@ -117,5 +125,5 @@
 		  // .always(function() {
 		  //   // alert( "finished" );
 		  });
-			
+
 	})
