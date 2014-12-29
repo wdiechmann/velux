@@ -19,6 +19,7 @@
 # Ignore public/assets as we build the pipeline when deploying
 public/assets
 public/uploads
+public/images/uploads
 
 .sass-cache/
 
