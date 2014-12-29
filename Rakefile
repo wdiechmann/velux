@@ -7,7 +7,7 @@ require "./velux_app"
 require "sinatra/activerecord/rake"
 
 
-# Vlad requires us to prepare somewhat 
+# Vlad requires us to prepare somewhat
 begin
   require 'vlad'
   Vlad.load( :app => nil, :scm => :git, :web => nil)
@@ -25,11 +25,12 @@ task :convert_kidz do
 end
 
 
-set :application, "fbi"
-set :repository, 'git@git4.alco.dk:laniel.git'
-set :domain, "ruby4.alco.dk"
-set :deploy_to, "/data2/html/sites/#{application}"
+set :application, "velux"
+set :repository, 'git@github.com:wdiechmann/velux.git'
+set :domain, "ruby5.alco.dk"
+set :deploy_to, "/var/www/#{application}"
 set :revision, 'head'                                 # git branch to deploy
+
 
 desc "Restart Passenger"
 remote_task :restart_passenger, :roles => :app do
@@ -41,6 +42,5 @@ task :update_site do
   require 'date'
   system "git add . && git ci -am 'updated on #{Date.today.to_s}'"
   system "git push"
-  Rake.application.invoke_task("vlad:update")  
+  Rake.application.invoke_task("vlad:update")
 end
-
