@@ -27,7 +27,7 @@
 		/ %img{ src: "#{image}"}
 
 		/ Modals
-		#projects.modal.hide.fade{ tabindex: "-1", role: "dialog",  :"aria-labelledby"=>"myModalLabelFBInc", :"aria-hidden"=>"true" }
+		#projects.modal.hide.fade{ tabindex: "-1", role: "dialog",  :"aria-labelledby"=>"myModalLabelVelux", :"aria-hidden"=>"true" }
 
 
 		%script{ src:"https://maps.googleapis.com/maps/api/js?v=3.exp"}
@@ -43,22 +43,7 @@
 			var shops = [
 				#{ Project.all.collect{ |c| c.js_arr }.compact.join }
 			]
-			// shops[shops.length] = { name: '<h3>Sverige</h3><p><b>kontakt:</b> Torben Kjær</p><p><b>email:</b><a href="mailto:torben@fbinc.dk">torben@fbinc</a></p><p><b>tlf:</b>+45 21664994</p>', lat: 57.1831605, lng: 14.0478214, marker: null };
-			// shops[shops.length] = { name: '<h3>Tyskland</h3><p><b>kontakt:</b> Torben Kjær</p><p><b>email:</b><a href="mailto:torben@fbinc.dk">torben@fbinc</a></p><p><b>tlf:</b>+45 21664994</p>', lat: 52.52000659999999, lng: 13.404954, marker: null };
-			// shops[shops.length] = { name: '<h3>Færøerne</h3><p><b>kontakt:</b> Torben Kjær</p><p><b>email:</b><a href="mailto:torben@fbinc.dk">torben@fbinc</a></p><p><b>tlf:</b>+45 21664994</p>', lat: 62.007864, lng: -6.7909816, marker: null };
-			// shops[shops.length] = { name: '<h3>Holland</h3><p><b>kontakt:</b> Torben Kjær</p><p><b>email:</b><a href="mailto:torben@fbinc.dk">torben@fbinc</a></p><p><b>tlf:</b>+45 21664994</p>', lat: 52.132633, lng: 5.291265999999999, marker: null };
-			// shops[shops.length] = { name: '<h3>Norge</h3><p><b>kontakt:</b> Torben Kjær</p><p><b>email:</b><a href="mailto:torben@fbinc.dk">torben@fbinc</a></p><p><b>tlf:</b>+45 21664994</p>', lat: 60.47202399999999, lng: 8.468945999999999, marker: null };
-			// shops[shops.length] = { name: '<h3>Island</h3><p><b>kontakt:</b> Halldor</p><p><b>email:</b><a href="mailto:birnag@hj.is">birnag@hj.is</a></p><p><b>tlf:</b>+35 45636300</p>', lat: 64.963051, lng: -19.020835, marker: null };
-			// shops[shops.length] = { name: '<h3>Grønland</h3><p><b>kontakt:</b> Torben Kjær</p><p><b>email:</b><a href="mailto:torben@fbinc.dk">torben@fbinc</a></p><p><b>tlf:</b>+45 21664994</p>', lat: 71.706936, lng: -42.604303, marker: null };
-			// shops[shops.length] = { name: '<h3>Finland</h3><p><b>kontakt:</b> Pekko Hokkanen</p><p><b>email:</b><a href="mailto:Pekko.hokkanen@goodwear.fi">Pekko.hokkanen@goodwear.fi</a></p><p><b>tlf:</b>+358 50 5557790</p>', lat: 61.92410999999999, lng: 25.748151, marker: null };
 
-			// $1 Firmanavn
-			//    adresse
-			//    postnr By
-			//    land
-			// $2 kontaktperson
-			// $3 email
-			// $4 tlf
 			var html_template = '<div class="marker">$1</div>';
 
 			function country(c){

@@ -1,4 +1,4 @@
-APP_ROOT = "/Users/walther/Documents/Projects/Rails/velux"
+APP_ROOT ||= "/Users/walther/Documents/Projects/Rails/velux"
 class ProjectScreen < Sinatra::Base
 
   register Sinatra::Flash
@@ -29,17 +29,30 @@ class ProjectScreen < Sinatra::Base
   end
 
   post "/projects" do
-    fp = File.join( APP_ROOT,'public/images/uploads', params[:project][:image] )
+    fp = params[:project][:image].blank? ? nil : File.join( APP_ROOT,'public/images/uploads', params[:project][:image] )
     @project = Project.create(params[:project])
     if @project
-      @project.geolocate
-      @project.image = File.open( fp ) if fp
-    end
-    if @project.save!
-      redirect to("/projects/#{@project.id}")
+
+      if @project.valid?
+        @project.geolocate
+        @project.image = File.open( fp ) unless fp.nil?
+        if @project.save!
+          # redirect to("/projects/#{@project.id}")
+          haml :project_new
+        else
+          flash[:error] = "der var et problem med at oprette projektet!"
+          # redirect back
+          haml :project_new
+        end
+      else
+        flash[:error] = "der var et problem med at oprette projektet!"
+        # redirect back
+        haml :project_new
+      end
     else
       flash[:error] = "der var et problem med at oprette projektet!"
-      redirect back
+      @project ||= Project.new
+      haml :project_new
     end
   end
 

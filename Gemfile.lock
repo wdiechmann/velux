@@ -36,6 +36,7 @@ GEM
       tilt
     i18n (0.6.11)
     json (1.8.1)
+    kgio (2.9.2)
     method_source (0.8.2)
     mime-types (2.4.3)
     mini_magick (4.0.1)
@@ -58,6 +59,7 @@ GEM
     racksh (1.0.0)
       rack (>= 1.0)
       rack-test (>= 0.5)
+    raindrops (0.13.0)
     rake (10.4.2)
     rake-remote_task (2.2.2)
       open4 (~> 1.0)
@@ -102,6 +104,10 @@ GEM
       sinatra (>= 1.2.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    unicorn (4.8.3)
+      kgio (~> 2.6)
+      rack
+      raindrops (~> 0.7)
     vlad (2.6.3)
       rake (>= 0.8, < 11.0)
       rake-remote_task (~> 2.1)
@@ -131,5 +137,6 @@ DEPENDENCIES
   sinatra-head
   sinatra-static-assets
   tux
+  unicorn
   vlad
   vlad-git

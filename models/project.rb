@@ -5,6 +5,8 @@ class Project < ActiveRecord::Base
   attr_accessor :image
   mount_uploader :image, ImageUploader
 
+  validates_presence_of :title, message: "Projektets titel skal udfyldes!"
+
   require 'geocoder'
 
   def geolocate
@@ -25,6 +27,10 @@ class Project < ActiveRecord::Base
     self.title.gsub!(/'/,"´")
     self.body.gsub!(/'/,"´")
     header,rubrik = self.body.split("__")
+    header ||= ''
+    rubrik ||= ''
+    links = self.links.nil? ? '' : self.links
+    amount = self.amount.nil? ? '0' : self.amount
     lng, lat = self.lng_lat.split(",")
     img = self.image_url rescue ''
     "{  title: '%s',
@@ -36,7 +42,7 @@ class Project < ActiveRecord::Base
         lat: %s,
         lng: %s,
         marker: null
-     }," % [self.title, RDiscount.new(header).to_html.strip, img, RDiscount.new(rubrik).to_html.strip, RDiscount.new(self.links).to_html.strip, RDiscount.new(self.amount).to_html.strip, lng, lat]
+     }," % [self.title, RDiscount.new(header).to_html.strip, img, RDiscount.new(rubrik).to_html.strip, RDiscount.new(links).to_html.strip, RDiscount.new(amount).to_html.strip, lng, lat]
   end
 
   def load_from_json file_name

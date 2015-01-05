@@ -18,6 +18,8 @@ gem 'sinatra-flash'
 gem 'mini_magick'
 gem 'rdiscount'
 
+gem 'unicorn'
+
 group :development do
   gem "shotgun"
   gem "tux"
