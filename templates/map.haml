@@ -19,6 +19,7 @@
 			}
 			.marker { width: 200px; }
 			#map-canvas img { max-width:none; }
+			p img { width: 200px; height: 150px; }
 
 
 	%body
@@ -125,6 +126,13 @@
 				map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 				var country = '';
+				var icon = {
+					url: 'images/vv_needle3.png', //url
+					// scaledSize: new google.maps.Size(26, 42), //scaled size
+					// origin: new google.maps.Point(0,0), //origin
+					// anchor: new google.maps.Point(0, 0) //anchor
+				};
+
 				for(var i = 0, l = shops.length; i < l; ++i) {
 					var myLatlng = new google.maps.LatLng(shops[i].lat,shops[i].lng);
 					var mapOptions = {
@@ -137,7 +145,8 @@
 					shops[i].marker = new google.maps.Marker({
 						position: myLatlng,
 						map: map,
-						title: shops[i].name
+						title: shops[i].name,
+						icon: icon
 					});
 					markerInfoWindow(shops[i],map);
 				}
