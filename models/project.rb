@@ -46,12 +46,13 @@ class Project < ActiveRecord::Base
         lat: %s,
         lng: %s,
         marker: null
-     }," % [self.title, cut_to_string(header), img, cut_to_string(rubrik), RDiscount.new(links).to_html.strip, RDiscount.new(amount).to_html.strip, lng, lat]
+     }," % [ RDiscount.new(self.title).to_html.strip.gsub(/[\r|\n]/,''), cut_to_string(header), img, cut_to_string(rubrik), RDiscount.new(links).to_html.strip, RDiscount.new(amount).to_html.strip, lng, lat]
   end
 
   def cut_to_string text
     tts = []
-    RDiscount.new(text).to_html.strip.scan(/.{1,250}/m).each do |t|
+    txt = RDiscount.new(text).to_html.strip.gsub(/[\r|\n]/,'')
+    txt.scan(/.{1,250}/m).each do |t|
       tts << "'%s'" % t
     end
     tts.join(",")

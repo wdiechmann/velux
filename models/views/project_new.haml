@@ -18,7 +18,9 @@
 		.form-group.form-group-sm
 			%label.col-sm-1.control-label titel
 			.col-sm-1
-				%input.form-control.title{ type:"text", name: "project[title]", value:"#{ @project.title}"}
+				/ %input.form-control.title{ type:"text", name: "project[title]", value:"#{ @project.title}"}
+				%textarea.form-control.title{ type:"text", name: "project[title]", rows: 5, placeholder: "Overskrift"}
+					= @project.title
 			%br
 		.form-group.form-group-sm
 			%label.col-sm-2.control-label
@@ -71,7 +73,7 @@
 
 :javascript
 	$('.search-form').on('click', function(){
-		var url='/projects?q='+$('input.title').val();
+		var url='/projects?q='+$('textarea.title').val();
 		console.log(url);
 		var jqxhr = $.get(url)
 		  .done(function(response) {
