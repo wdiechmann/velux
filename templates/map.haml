@@ -73,9 +73,9 @@
 			function formatFields(shop){
 				var card = '';
 				card = formatField(1, shop.title) +
-				formatField(2,shop.header) +
+				formatField(2,shop.header.join('')) +
 				formatField(3,shop.image) +
-				formatField(4,shop.rubrik) +
+				formatField(4,shop.rubrik.join('')) +
 				formatField(5,shop.links) +
 				formatField(6,shop.amount)
 				return card;

@@ -34,15 +34,27 @@ class Project < ActiveRecord::Base
     lng, lat = self.lng_lat.split(",")
     img = self.image_url rescue ''
     "{  title: '%s',
-        header: '%s',
+        header: [
+          %s
+        ],
         image: '%s',
-        rubrik: '%s',
+        rubrik: [
+          %s
+        ],
         links: '%s',
         amount: '%s',
         lat: %s,
         lng: %s,
         marker: null
-     }," % [self.title, RDiscount.new(header).to_html.strip, img, RDiscount.new(rubrik).to_html.strip, RDiscount.new(links).to_html.strip, RDiscount.new(amount).to_html.strip, lng, lat]
+     }," % [self.title, cut_to_string(header), img, cut_to_string(rubrik), RDiscount.new(links).to_html.strip, RDiscount.new(amount).to_html.strip, lng, lat]
+  end
+
+  def cut_to_string text
+    tts = []
+    RDiscount.new(text).to_html.strip.scan(/.{1,250}/m).each do |t|
+      tts << "'%s'" % t
+    end
+    tts.join(",")
   end
 
   def load_from_json file_name
