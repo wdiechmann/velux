@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20141215171656) do
     t.string   "amount"
     t.text     "body"
     t.text     "links"
+    t.text     "places"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -30,6 +30,7 @@ class Project < ActiveRecord::Base
     header ||= ''
     rubrik ||= ''
     links = self.links.nil? ? '' : self.links
+    places = self.places.nil? ? '' : self.places
     amount = self.amount.nil? ? '0' : self.amount
     lng, lat = self.lng_lat.split(",")
     img = self.image_url rescue ''
@@ -42,11 +43,13 @@ class Project < ActiveRecord::Base
           %s
         ],
         links: '%s',
+        places: '%s',
+        markers: [],
         amount: '%s',
         lat: %s,
         lng: %s,
         marker: null
-     }," % [ RDiscount.new(self.title).to_html.strip.gsub(/[\r|\n]/,''), cut_to_string(header), img, cut_to_string(rubrik), RDiscount.new(links).to_html.strip, RDiscount.new(amount).to_html.strip, lng, lat]
+     }," % [ RDiscount.new(self.title).to_html.strip.gsub(/[\r|\n]/,''), cut_to_string(header), img, cut_to_string(rubrik), RDiscount.new(links).to_html.strip, places, RDiscount.new(amount).to_html.strip, lng, lat]
   end
 
   def cut_to_string text
@@ -57,12 +60,12 @@ class Project < ActiveRecord::Base
     end
     tts.join(",")
   end
-
-  def load_from_json file_name
-    JSON.parse(get_file_as_string(file_name)).each do |item|
-      Customer.create(item)
-    end
-  end
+  #
+  # def load_from_json file_name
+  #   JSON.parse(get_file_as_string(file_name)).each do |item|
+  #     Customer.create(item)
+  #   end
+  # end
 
   def get_file_as_string(filename)
     data = ''

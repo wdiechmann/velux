@@ -59,6 +59,12 @@
 				%textarea.form-control{ name: "project[links]", rows: 4, placeholder: "[tekst](http://www.pol.dk)"}
 					= @project.links
 			%br
+		.form-group.form-group-sm
+			%label.col-sm-2.control-label steder (adskilt af mellemrum)
+			.col-sm-10
+				%textarea.form-control{ name: "project[places]", rows: 4, placeholder: "48.343434,16.231241 12.123131,88.123127"}
+					= @project.places
+			%br
 
 
 

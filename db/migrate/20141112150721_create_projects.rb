@@ -10,6 +10,7 @@ class CreateProjects < ActiveRecord::Migration
       t.string :amount
       t.text :body
       t.text :links
+      t.text :places
       t.timestamps
     end
   end

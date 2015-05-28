@@ -11,7 +11,7 @@
 	%head
 		= haml :head, :locals => { }
 		:css
-			html, body, .content { background-color: #111; }
+			html, body, .content { background-color: #fff; }
 			html, body, #map-canvas {
 				height: 100%;
 				margin: 0px;
@@ -21,9 +21,15 @@
 			#map-canvas img { max-width:none; }
 			p img { width: 200px; height: 150px; }
 
+			img.center {
+			    display: block;
+			    margin-left: auto;
+			    margin-right: auto;
+					max-height: 100px;
+			}
 
 	%body
-
+		%img.center{ src: "images/header2copy.png" }
 		#map-canvas
 		/ %img{ src: "#{image}"}
 
@@ -46,6 +52,7 @@
 			]
 
 			var html_template = '<div class="marker">$1</div>';
+			var centerLatlng = new google.maps.LatLng(48.3307002,16.7783715);
 
 			function country(c){
 				return c.replace(/danmark/i,'').trim();
@@ -81,13 +88,50 @@
 				return card;
 			}
 
+			var current_markers = [];
+
+			function setMarkersMap(map){
+			  for (var i = 0; i < current_markers.length; i++) {
+			    current_markers[i].setMap(map);
+			  }
+			}
+
+			function showPlaces(shop,map){
+				var image = 'images/velux_prik2.png';
+			  var places = shop.places.split(' ');
+				shop.markers = [];
+				for(var i = 0, l = places.length; i < l; ++i) {
+					latlng = places[i].split(',');
+					var myLatlng = new google.maps.LatLng(latlng[0],latlng[1]);
+					places_marker = new google.maps.Marker({
+						position: myLatlng,
+						map: map,
+						title: shop.name,
+						icon: image
+					});
+					shop.markers.push(places_marker);
+				}
+				current_markers = shop.markers;
+				setMarkersMap(map);
+				$('.gm-style-iw').next('div').on('click', function(){
+					setMarkersMap(null);
+				});
+			}
+
+			var current_open_shop = null;
+
 			function markerInfoWindow(shop,map){
 
 				var infoWindow = new google.maps.InfoWindow();
 
 				google.maps.event.addListener(shop.marker, 'click', function () {
-				   infoWindow.setContent( html_template.replace(/\$1/,formatFields(shop)) );
-				   infoWindow.open(map,shop.marker);
+					setMarkersMap(null);
+				  infoWindow.setContent( html_template.replace(/\$1/,formatFields(shop)) );
+				  infoWindow.open(map,shop.marker);
+					current_open_shop = shop;
+					if (shop.places != '') {
+						showPlaces(shop,map);
+					}
 				});
 
 			}
@@ -121,7 +165,8 @@
 
 			function initialize() {
 				var mapOptions = {
-					zoom: 9
+					zoom: 6,
+					center: myLatlng,
 				};
 				map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
@@ -152,24 +197,25 @@
 				}
 
 				// Try HTML5 geolocation
-				if(navigator.geolocation) {
-					navigator.geolocation.getCurrentPosition(function(position) {
-						var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+				//if(navigator.geolocation) {
+				//	navigator.geolocation.getCurrentPosition(function(position) {
+				//		var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
-						var infowindow = new google.maps.InfoWindow({
-							map: map,
-							position: pos,
-							// content: 'Her er du - cirka :)'
-						});
+				//		var infowindow = new google.maps.InfoWindow({
+				//			map: map,
+				//			position: myLatlng,
+				//			// content: 'Her er du - cirka :)'
+				//		});
 
-						map.setCenter(pos);
-					}, function() {
-						handleNoGeolocation(true);
-					});
-				} else {
-					// Browser doesn't support Geolocation
-					handleNoGeolocation(false);
-				}
+				//		map.setCenter(pos);
+				//	}, function() {
+				//		handleNoGeolocation(true);
+				//	});
+				//} else {
+				//	// Browser doesn't support Geolocation
+				//	handleNoGeolocation(false);
+				//}
+				map.setCenter(centerLatlng);
 
 
 
