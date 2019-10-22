@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 gem "rack" #, "1.4.4"
 gem "sinatra", :require => "sinatra/base"
-gem "haml"
+gem "haml", ">= 5.0.0"
 gem "sinatra-head"
 gem "sinatra-contrib"
 gem 'sinatra-static-assets'
