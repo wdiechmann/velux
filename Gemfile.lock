@@ -28,7 +28,7 @@ GEM
     columnize (0.9.0)
     concurrent-ruby (1.1.5)
     debugger-linecache (1.2.0)
-    geocoder (1.2.6)
+    geocoder (1.6.1)
     haml (5.1.2)
       temple (>= 0.8.0)
       tilt
